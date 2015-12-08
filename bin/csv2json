@@ -11,7 +11,7 @@ if(args.help || args.h) {
   return
 }
 
-let csv2json = new Csv2json({separator: args.separator, quote: args.quote});
+let csv2json = new Csv2json({separator: args.separator, quote: args.quote})
 let output = process.stdout
 
 if(args._[0]) {
