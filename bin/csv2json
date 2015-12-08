@@ -12,11 +12,14 @@ if(args.help || args.h) {
 }
 
 let csv2json = new Csv2json({separator: args.separator, quote: args.quote});
+let output = process.stdout
+
+if(args._[0]) {
+  output = fs.createWriteStream(args._[0]) 
+}
 
 process.stdin.setEncoding('utf8')
-process.stdin.on('readable', function() {
-  process.stdin.pipe(csv2json)
-})
-process.stdin.on('end', function() {
-  csv2json.pipe(process.stdout)
-})
+
+process.stdin
+.pipe(csv2json)
+.pipe(output)

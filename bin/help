@@ -3,7 +3,7 @@ Name
 
 Synopsis
         csv2json [ --separator ] [ --quote ]
-                 [ file ]
+                 [ destination ]
 
 Description
 
@@ -11,9 +11,13 @@ Description
 
         csv2json < data.csv | jq . 
 
-        Redirect output to file
+        Redirect output to file:
 
         csv2json < data.csv > data.json
+
+        Specify destination:
+
+        cat data.csv | csv2json --separator , data.json
 
 Options
 
