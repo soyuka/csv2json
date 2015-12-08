@@ -1,0 +1,21 @@
+{
+  "name": "@soyuka/csv2json",
+  "version": "1.0.0",
+  "description": "Stream csv to json",
+  "main": "csv2json.js",
+  "bin": "./bin/csv2json",
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "repository": "http://github.com/soyuka/csv2json",
+  "keywords": [
+    "csv",
+    "json",
+    "stream"
+  ],
+  "author": "soyuka",
+  "license": "WTFPL",
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
+}
