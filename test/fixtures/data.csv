@@ -3,3 +3,5 @@ Foo;Bar;19;F;“
 Bar;Foo;-123;H;"'asgdoasji;"
 Some;One;0;;No comment
 "A line";" with quotes";"9";"/";"everywhere"
+test;test;;;"some string with ; a semicol"
+"";"";"";"";""

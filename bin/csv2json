@@ -22,4 +22,4 @@ process.stdin.setEncoding('utf8')
 
 process.stdin
 .pipe(csv2json)
-.pipe(output)
+.pipe(process.stdout)

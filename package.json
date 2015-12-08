@@ -17,5 +17,9 @@
   "license": "WTFPL",
   "dependencies": {
     "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "benchmark": "^1.0.0",
+    "csv-parser": "^1.8.1"
   }
 }
