@@ -15,7 +15,7 @@ Description
 
         csv2json < data.csv > data.json
 
-        Specify destination:
+        File destination:
 
         cat data.csv | csv2json --separator , data.json
 

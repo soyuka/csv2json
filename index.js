@@ -4,7 +4,6 @@ const Transform = require('stream').Transform
 const util = require('util')
 
 function Csv2json(opt) {
-
   if(!(this instanceof Csv2json)) {
     return new Csv2json(opt)
   }
@@ -15,13 +14,13 @@ function Csv2json(opt) {
   Transform.call(this)
 
   this.separator = opt.separator ? opt.separator : ';'
-  this.separator = this.toBuffer(this.separator)
+  this.separator = this.toCharBuffer(this.separator)
 
   this.quote = opt.quote ? opt.quote : '"'
-  this.quote = this.toBuffer(this.quote)
+  this.quote = this.toCharBuffer(this.quote)
 
-  this.cr = this.toBuffer('\r')
-  this.nl = this.toBuffer('\n')
+  this.cr = this.toCharBuffer('\r')
+  this.nl = this.toCharBuffer('\n')
 
   this.headers = []
   this.row = {}
@@ -34,10 +33,17 @@ function Csv2json(opt) {
 
 util.inherits(Csv2json, Transform)
 
-Csv2json.prototype.toBuffer = function(str) {
+/**
+ * Returns buffer for a character, use it to compare chunks
+ * @param {String} str
+ */
+Csv2json.prototype.toCharBuffer = function(str) {
   return new Buffer(str)[0]
 }
 
+/**
+ * @inheritdoc
+ */
 Csv2json.prototype._transform = function(chunk, encoding, callback) {
   let length = chunk.length
   let prev = 0
@@ -69,6 +75,7 @@ Csv2json.prototype._transform = function(chunk, encoding, callback) {
       }
 
       if(chunk[i] === this.cr) {
+        //cr is the separator
         if(chunk[i + 1] !== this.nl) {
           nextColumn.bind(this)()
           this.nextRow() 
@@ -95,16 +102,26 @@ Csv2json.prototype._transform = function(chunk, encoding, callback) {
     end++
   }
 
+  //leftovers
   this.row[this.headers[this.column]] = chunk.slice(begin, end)
 
   callback()
 }
 
+/**
+ * @inheritdoc
+ */
 Csv2json.prototype._flush = function(callback) {
   this.push(']')
   callback()
 }
 
+/**
+ * Saves column to row
+ * @param {Buffer} chunk
+ * @param {Number} begin
+ * @param {Number} end
+ */
 Csv2json.prototype.nextColumn = function(chunk, begin, end) {
   let column = chunk.slice(begin, end).toString()
 
@@ -113,6 +130,7 @@ Csv2json.prototype.nextColumn = function(chunk, begin, end) {
     return
   }
 
+  //append to leftovers
   if(this.row[this.headers[this.column]] !== undefined) {
     this.row[this.headers[this.column]] += column
   } else {
@@ -122,6 +140,9 @@ Csv2json.prototype.nextColumn = function(chunk, begin, end) {
   this.column++
 }
 
+/**
+ * Row ends, push and reset
+ */
 Csv2json.prototype.nextRow = function() {
   this.rows++
 
