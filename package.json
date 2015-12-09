@@ -1,6 +1,6 @@
 {
   "name": "@soyuka/csv2json",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Stream csv to json",
   "main": "csv2json.js",
   "bin": "./bin/csv2json",
