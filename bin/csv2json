@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 const args = require('minimist')(process.argv.slice(2))
-const Csv2json = require('../csv2json.js')
+const Csv2json = require('../')
 const fs = require('fs')
 
 if(args.help || args.h) {
